@@ -5,8 +5,7 @@
 
 -- Enable powershell as your default shell
 vim.opt.shell = "pwsh.exe -NoLogo"
-vim.opt.shellcmdflag =
-  "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
+vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
 vim.cmd [[
 		let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 		let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
@@ -15,20 +14,20 @@ vim.cmd [[
 
 -- Set a compatible clipboard manager
 vim.g.clipboard = {
-  copy = {
-    ["+"] = "win32yank.exe -i --crlf",
-    ["*"] = "win32yank.exe -i --crlf",
-  },
-  paste = {
-    ["+"] = "win32yank.exe -o --lf",
-    ["*"] = "win32yank.exe -o --lf",
-  },
+    copy = {
+        ["+"] = "win32yank.exe -i --crlf",
+        ["*"] = "win32yank.exe -i --crlf",
+    },
+    paste = {
+        ["+"] = "win32yank.exe -o --lf",
+        ["*"] = "win32yank.exe -o --lf",
+    },
 }
 
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "onedarker"
+lvim.colorscheme = "vscode"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -90,8 +89,8 @@ lvim.builtin.nvimtree.show_icons.git = 0
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
-  "c",
-  "lua",
+    "c",
+    "lua",
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
@@ -168,7 +167,104 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- User-Added Configurations
 -- Additional Plugins
 lvim.plugins = {
-    {"nvim-treesitter/nvim-treesitter-textobjects"},
+    { "nvim-treesitter/nvim-treesitter-textobjects" },
+    { "folke/lsp-colors.nvim",
+        event = "BufRead",
+        config = function()
+            require("lsp-colors").setup({
+                Error = "#db4b4b",
+                Warning = "#e0af68",
+                Information = "#0db9d7",
+                Hint = "#10B981"
+            })
+        end,
+    },
+    { "folke/trouble.nvim",
+        config = function()
+            require("trouble").setup {}
+        end
+    },
+    { "gennaro-tedesco/nvim-peekup" },
+    { "Mofiqul/vscode.nvim" },
+    { "ruifm/gitlinker.nvim",
+        requires = "nvim-lua/plenary.nvim",
+    },
+    { "rhysd/conflict-marker.vim", },
+    { "tpope/vim-fugitive" },
+    { "folke/twilight.nvim",
+        config = function()
+            require("twilight").setup {}
+        end
+    },
+    { "" },
+    { "" },
+    { "" },
+    { "" },
 }
 
+
+
+-- user config
+vim.api.nvim_command('set relativenumber number nocp noerrorbells nowrap hidden cursorline encoding=utf8 history=1000 termguicolors')
+vim.api.nvim_command('set shiftwidth=4 tabstop=4 expandtab softtabstop=4 autoindent smartindent')
+vim.api.nvim_command("set foldmethod=manual foldtext=getline(v:foldstart).'...'.trim(getline(v:foldend))")
+vim.keymap.set('n', '<C-j>', '<C-d>', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-k>', '<C-u>', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-h>', '^', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-l>', '$', { noremap = true, silent = true })
+vim.g.vscode_style = "dark"
+
+-- telescope.nvim config
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true, silent = true })
+
+-- nvim-treesitter config
 require 'nvim-treesitter.install'.compilers = { "clang" }
+
+-- bufferline.nvim config
+
+-- nvim-tree.lua config
+vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-f><C-h>', ':tabp<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-f><C-l>', ':tabn<CR>', { noremap = true, silent = true })
+-- has a lot of keymappings
+
+-- Comment.nvim config
+
+-- project.nvim config
+
+-- LuaSnip config
+
+-- structlog.nvim config
+
+-- nvim-lspconfig config
+vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', { noremap = true, silent = true })
+
+-- friendly-snippets config
+
+-- nlsp-settings.nvim config
+
+-- lualine.nvim config
+
+-- nvim-notify config
+vim.keymap.set('n', '<leader>n', ':Notifications<CR>', { noremap = true, silent = true })
+
+-- DAPInstall.nvim config
+
+-- toggleterm.nvim config
+
+-- nvim-dap config
