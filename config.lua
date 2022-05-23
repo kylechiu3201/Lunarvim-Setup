@@ -177,24 +177,82 @@ lvim.plugins = {
                 Information = "#0db9d7",
                 Hint = "#10B981"
             })
-        end,
+        end
     },
     { "folke/trouble.nvim",
         config = function()
-            require("trouble").setup {}
+            require("trouble").setup({})
         end
     },
     { "gennaro-tedesco/nvim-peekup" },
     { "Mofiqul/vscode.nvim" },
-    { "ruifm/gitlinker.nvim",
-        requires = "nvim-lua/plenary.nvim",
-    },
-    { "rhysd/conflict-marker.vim", },
     { "tpope/vim-fugitive" },
     { "folke/twilight.nvim",
         config = function()
-            require("twilight").setup {}
+            require("twilight").setup({})
         end
+    },
+    { "kylechiu3201/nvim-pqf",
+        config = function()
+            require("pqf").setup({})
+        end
+    },
+    { "akinsho/git-conflict.nvim",
+        config = function()
+            require("git-conflict").setup({})
+        end
+    },
+    { "farmergreg/vim-lastplace",
+        config = function()
+            require("lastplace").setup({
+                open_folds = true
+            })
+        end
+    },
+    { "stevearc/aerial.nvim",
+        config = function()
+            require("aerial").setup({})
+        end
+    },
+    { "jremmen/vim-ripgrep" },
+    { "onsails/diaglist.nvim",
+        config = function()
+            require("diaglist").init({
+                debug = false,
+                debounce_ms = 150
+            })
+        end
+    },
+    { "andymass/vim-matchup" },
+    { "onsails/lspkind.nvim" },
+    { "tpope/vim-sleuth" },
+    { "ray-x/lsp_signature.nvim",
+        config = function()
+            require("lsp_signature").setup({})
+        end
+    },
+    { "lukas-reineke/indent-blankline.nvim",
+        config = function()
+            require("indent_blankline").setup({
+                show_current_context = true,
+                show_current_context_start = true,
+                use_treesitter = true,
+                show_end_of_file = true,
+                use_treesitter_scope = false
+            })
+        end
+    },
+    { "ntpeters/vim-better-whitespace",
+        config = function()
+            require("better-whitespace").setup({
+                current_line_whitespace_disabled_soft = true
+                -- current_line_whitespace_disabled_hard = true
+            })
+        end
+    },
+    { "simrat39/symbols-outline.nvim" },
+    { "sindrets/diffview.nvim",
+        requires = "nvim-lua/plenary.nvim"
     },
     { "" },
     { "" },
@@ -205,31 +263,32 @@ lvim.plugins = {
 
 
 -- user config
-vim.api.nvim_command('set relativenumber number nocp noerrorbells nowrap hidden cursorline encoding=utf8 history=1000 termguicolors')
-vim.api.nvim_command('set shiftwidth=4 tabstop=4 expandtab softtabstop=4 autoindent smartindent')
-vim.api.nvim_command("set foldmethod=manual foldtext=getline(v:foldstart).'...'.trim(getline(v:foldend))")
-vim.keymap.set('n', '<C-j>', '<C-d>', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-k>', '<C-u>', { noremap = true, silent = true })
-vim.keymap.set('n', '<S-h>', '^', { noremap = true, silent = true })
-vim.keymap.set('n', '<S-l>', '$', { noremap = true, silent = true })
-vim.g.vscode_style = "dark"
+    vim.api.nvim_command('set relativenumber number nocp noerrorbells nowrap hidden cursorline encoding=utf8 history=1000 termguicolors')
+    vim.api.nvim_command('set shiftwidth=4 tabstop=4 expandtab softtabstop=4 autoindent smartindent')
+    vim.api.nvim_command("set foldmethod=manual foldtext=getline(v:foldstart).'...'.trim(getline(v:foldend))")
+    vim.keymap.set('n', '<C-j>', '<C-d>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<C-k>', '<C-u>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<S-h>', '^', { noremap = true, silent = true })
+    vim.keymap.set('n', '<S-l>', '$', { noremap = true, silent = true })
+    vim.g.vscode_style = "dark"
+    lvim.format_on_save = false -- <leader>lf to manually format file
 
 -- telescope.nvim config
-vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>ff', '<cmd>Telescope find_files<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>fg', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>fb', '<cmd>Telescope buffers<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>fh', '<cmd>Telescope help_tags<CR>', { noremap = true, silent = true })
 
 -- nvim-treesitter config
-require 'nvim-treesitter.install'.compilers = { "clang" }
+    require 'nvim-treesitter.install'.compilers = { "clang" }
 
 -- bufferline.nvim config
 
 -- nvim-tree.lua config
-vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-f><C-h>', ':tabp<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-f><C-l>', ':tabn<CR>', { noremap = true, silent = true })
--- has a lot of keymappings
+    vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<C-f><C-h>', ':tabp<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<C-f><C-l>', ':tabn<CR>', { noremap = true, silent = true })
+    -- has a lot of keymappings
 
 -- Comment.nvim config
 
@@ -240,19 +299,20 @@ vim.keymap.set('n', '<C-f><C-l>', ':tabn<CR>', { noremap = true, silent = true }
 -- structlog.nvim config
 
 -- nvim-lspconfig config
-vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { noremap = true, silent = true })
+    -- vim.keymap.set('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<C-g>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', { noremap = true, silent = true })
 
 -- friendly-snippets config
 
@@ -261,10 +321,73 @@ vim.keymap.set('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', { norem
 -- lualine.nvim config
 
 -- nvim-notify config
-vim.keymap.set('n', '<leader>n', ':Notifications<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>n', ':Notifications<CR>', { noremap = true, silent = true })
 
 -- DAPInstall.nvim config
 
 -- toggleterm.nvim config
 
 -- nvim-dap config
+
+
+
+
+-- trouble.nvim config
+    -- vim.keymap.set('n', '<leader>x?', '<cmd>TrougleToggle ???<CR>', { noremap = true, silent = true })
+    -- ??? = workspace_diagnostics, document_diagnostics, quickfix, loclist, or lsp_references
+
+-- nvim-peekup config
+    -- activate with "" in normal mode
+
+-- twilight.nvim config
+    vim.keymap.set('n', '<space>tt', ':Twilight<CR>', { noremap = true, silent = true })
+
+-- git-conflict.nvim config
+    -- ct: choose theirs
+    -- cb: choose both
+    -- c0: choose none
+    -- ]x: previous conflict
+    -- [x: next conflict
+
+-- aerial.nvim config
+
+-- diaglist.nvim config
+
+-- vim-matchup config
+    require("nvim-treesitter.configs").setup({
+        matchup = {
+            enable = true
+        }
+    })
+
+-- lspkind.nvim config
+    local lspkind = require('lspkind')
+    local cmp = require("cmp")
+    cmp.setup {
+      formatting = {
+        format = lspkind.cmp_format({
+        mode = 'symbol', -- show only symbol annotations
+        maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+
+         -- The function below will be called before any actual modifications from lspkind
+         -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+         -- before = function (entry, vim_item)
+         --   ...
+         --   return vim_item
+         -- end
+        })
+      }
+    }
+
+-- symbols-outline.nvim config
+    vim.keymap.set('n', '<space>lo', ':SymbolsOutline<CR>0', { noremap = true, silent = true })
+    -- Enter: Go to symbol location in code
+    -- o: Go to symbol location in code without losing focus
+    -- <C-Space>: Hover current symbol
+    -- K: Toggles the current symbol preview
+    -- r: Rename symbol
+    -- a: Code actions
+    -- ?: Show help message
+
+-- diffview.nvim config
+
