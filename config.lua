@@ -209,11 +209,6 @@ lvim.plugins = {
             })
         end
     },
-    { "stevearc/aerial.nvim",
-        config = function()
-            require("aerial").setup({})
-        end
-    },
     { "jremmen/vim-ripgrep" },
     { "onsails/diaglist.nvim",
         config = function()
@@ -256,8 +251,6 @@ lvim.plugins = {
     },
     { "" },
     { "" },
-    { "" },
-    { "" },
 }
 
 
@@ -270,6 +263,10 @@ lvim.plugins = {
     vim.keymap.set('n', '<C-k>', '<C-u>', { noremap = true, silent = true })
     vim.keymap.set('n', '<S-h>', '^', { noremap = true, silent = true })
     vim.keymap.set('n', '<S-l>', '$', { noremap = true, silent = true })
+    vim.keymap.set('n', '<C-h>', ':bp<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<C-l>', ':bn<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<C-f><C-h>', ':tabp<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<C-f><C-l>', ':tabn<CR>', { noremap = true, silent = true })
     vim.g.vscode_style = "dark"
     lvim.format_on_save = false -- <leader>lf to manually format file
 
@@ -286,8 +283,6 @@ lvim.plugins = {
 
 -- nvim-tree.lua config
     vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
-    vim.keymap.set('n', '<C-f><C-h>', ':tabp<CR>', { noremap = true, silent = true })
-    vim.keymap.set('n', '<C-f><C-l>', ':tabn<CR>', { noremap = true, silent = true })
     -- has a lot of keymappings
 
 -- Comment.nvim config
@@ -333,8 +328,11 @@ lvim.plugins = {
 
 
 -- trouble.nvim config
-    -- vim.keymap.set('n', '<leader>x?', '<cmd>TrougleToggle ???<CR>', { noremap = true, silent = true })
-    -- ??? = workspace_diagnostics, document_diagnostics, quickfix, loclist, or lsp_references
+    vim.keymap.set('n', '<space>tw', '<cmd>TroubleToggle workspace_diagnostics<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>td', '<cmd>TroubleToggle document_diagnostics<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>tq', '<cmd>TroubleToggle quickfix<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>tl', '<cmd>TroubleToggle loclist<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', 'gR', '<cmd>TroubleToggle lsp_references<CR>', { noremap = true, silent = true })
 
 -- nvim-peekup config
     -- activate with "" in normal mode
@@ -349,10 +347,6 @@ lvim.plugins = {
     -- ]x: previous conflict
     -- [x: next conflict
 
--- aerial.nvim config
-
--- diaglist.nvim config
-
 -- vim-matchup config
     require("nvim-treesitter.configs").setup({
         matchup = {
@@ -363,7 +357,7 @@ lvim.plugins = {
 -- lspkind.nvim config
     local lspkind = require('lspkind')
     local cmp = require("cmp")
-    cmp.setup {
+    cmp.setup({
       formatting = {
         format = lspkind.cmp_format({
         mode = 'symbol', -- show only symbol annotations
@@ -377,7 +371,7 @@ lvim.plugins = {
          -- end
         })
       }
-    }
+    })
 
 -- symbols-outline.nvim config
     vim.keymap.set('n', '<space>lo', ':SymbolsOutline<CR>0', { noremap = true, silent = true })
@@ -390,4 +384,5 @@ lvim.plugins = {
     -- ?: Show help message
 
 -- diffview.nvim config
-
+    vim.keymap.set('n', '<space>do', ':DiffviewOpen<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<space>dc', ':DiffviewClose<CR>', { noremap = true, silent = true })
